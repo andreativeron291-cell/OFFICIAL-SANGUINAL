@@ -82,6 +82,7 @@
             justify-content: center;
             gap: 10px;
             text-transform: uppercase;
+            text-decoration: none; /* Rimuove la sottolineatura dal link */
         }
 
         .btn:hover {
@@ -91,7 +92,7 @@
             transform: scale(1.05);
         }
 
-        /* Icona Discord in SVG */
+        /* Icona Discord */
         .discord-icon {
             width: 24px;
             height: 24px;
@@ -107,7 +108,7 @@
             border-radius: 8px;
             color: #ffcccc;
             font-size: 1rem;
-            display: none; /* Nascosto all'inizio */
+            display: none;
             animation: fadeIn 0.4s ease-in-out forwards;
         }
 
@@ -128,35 +129,29 @@
 
         <div class="button-group">
             <!-- Tasto 1: Gioco -->
-            <button class="btn" onclick="mostraInfo('GIOCO')">
+            <button class="btn" onclick="mostraInfo()">
                 🎮 GIOCO
             </button>
 
-            <!-- Tasto 2: Server Discord -->
-            <button class="btn" onclick="mostraInfo('DISCORD')">
+            <!-- Tasto 2: Link Diretto al Server Discord -->
+            <a href="https://discord.gg/EeuvcDmbUd" target="_blank" class="btn">
                 <svg class="discord-icon" viewBox="0 0 127.14 96.36">
-                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53TaskS31,40.3,36.18,40.3,42.45,40.3c6.33,0,11.5,5.77,11.39,12.7C53.84,60,48.78,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.16-12.7,11.44-12.7c6.34,0,11.5,5.77,11.39,12.7C96.08,60,91,65.69,84.69,65.69Z"/>
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.7,11.45-12.7c6.33,0,11.5,5.77,11.39,12.7C53.84,60,48.78,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.16-12.7,11.44-12.7c6.34,0,11.5,5.77,11.39,12.7C96.08,60,91,65.69,84.69,65.69Z"/>
                 </svg>
                 SERVER DISCORD
-            </button>
+            </a>
         </div>
 
-        <!-- Messaggio che appare al click -->
+        <!-- Messaggio che appare al click su GIOCO -->
         <div id="infoBox" class="info-box"></div>
     </div>
 
-    <!-- Script per la gestione dei click e l'effetto sangue -->
+    <!-- Script per la gestione del click e l'effetto sangue -->
     <script>
-        // Funzione per mostrare i testi quando si cliccano i bottoni
-        function mostraInfo(tipo) {
+        function mostraInfo() {
             const infoBox = document.getElementById('infoBox');
             infoBox.style.display = 'block';
-
-            if (tipo === 'GIOCO') {
-                infoBox.innerHTML = "⚠️ <strong>IL GIOCO NON È ANCORA DISPONIBILE!</strong><br>Uscirà il <strong>7 Novembre 2026</strong>.";
-            } else if (tipo === 'DISCORD') {
-                infoBox.innerHTML = "💬 <strong>SERVER DISCORD:</strong><br>Il server è ancora da creare!";
-            }
+            infoBox.innerHTML = "⚠️ <strong>IL GIOCO NON È ANCORA DISPONIBILE!</strong><br>Uscirà il <strong>7 Novembre 2026</strong>.";
         }
 
         // --- EFFETTO GOCCE DI SANGUE ANIMATE ---
@@ -171,7 +166,7 @@
         resizeCanvas();
 
         const drops = [];
-        const numDrops = 45; // Numero di gocce a schermo
+        const numDrops = 45;
 
         for (let i = 0; i < numDrops; i++) {
             drops.push({
@@ -186,20 +181,16 @@
         function drawBlood() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#8b0000";
             for (let i = 0; i < drops.length; i++) {
                 let d = drops[i];
 
-                // Disegna la goccia/striscia di sangue
                 ctx.beginPath();
                 ctx.rect(d.x, d.y, d.width, d.length);
                 ctx.fillStyle = "rgba(180, 0, 0, 0.7)";
                 ctx.fill();
 
-                // Muovi la goccia verso il basso
                 d.y += d.speed;
 
-                // Se esce dallo schermo, ricomincia dall'alto
                 if (d.y > canvas.height) {
                     d.y = -d.length;
                     d.x = Math.random() * canvas.width;
