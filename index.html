@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SANGUINAL - Official Site</title>
+    <!-- Font horror/gore caricato da Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+
     <style>
-        /* Stile Generale della Pagina */
+        /* Reset e Stile Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial Black', sans-serif;
         }
 
         body {
-            background-color: #080000;
+            background-color: #050000;
             color: #ffffff;
+            font-family: 'Arial', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -25,7 +29,7 @@
             position: relative;
         }
 
-        /* Canvas per l'effetto del sangue che cade */
+        /* Canvas per l'effetto pioggia di sangue */
         #bloodCanvas {
             position: absolute;
             top: 0;
@@ -36,31 +40,42 @@
             pointer-events: none;
         }
 
-        /* Contenitore Principale */
+        /* Scheda Principale del Sito */
         .container {
             position: relative;
             z-index: 10;
             text-align: center;
-            background: rgba(15, 0, 0, 0.85);
-            padding: 40px 30px;
-            border-radius: 15px;
-            border: 2px solid #8b0000;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.6);
+            background: rgba(20, 0, 0, 0.9);
+            padding: 35px 20px;
+            border-radius: 20px;
+            border: 3px solid #8b0000;
+            box-shadow: 0 0 35px #ff0000, inset 0 0 15px #8b0000;
             max-width: 90%;
-            width: 400px;
+            width: 420px;
+            backdrop-filter: blur(5px);
         }
 
-        /* Titolo Gioco */
+        /* Titolo SANGUINAL (Risolto il problema del testo che esce) */
         h1 {
-            font-size: 3rem;
+            font-family: 'Creepster', cursive; /* Font stile sangue colante */
+            font-size: clamp(2.3rem, 10vw, 3.8rem); /* Dimensioni fluide per adattarsi a tutti gli schermi */
             color: #ff0000;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000;
+            letter-spacing: 2px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            text-shadow: 0 0 10px #ff0000, 0 0 25px #8b0000, 0 0 40px #4a0000;
             margin-bottom: 30px;
+            line-height: 1.1;
+            animation: pulseGlow 2s infinite alternate;
         }
 
-        /* Menu Pulsanti */
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000; }
+            to { text-shadow: 0 0 20px #ff0000, 0 0 35px #ff0000, 0 0 50px #8b0000; }
+        }
+
+        /* Lista Pulsanti */
         .button-group {
             display: flex;
             flex-direction: column;
@@ -68,72 +83,77 @@
         }
 
         .btn {
-            background: linear-gradient(180deg, #4a0000, #1a0000);
+            background: linear-gradient(180deg, #660000 0%, #1a0000 100%);
             color: #ffffff;
             border: 2px solid #ff0000;
-            padding: 15px 20px;
+            padding: 16px 20px;
             font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 8px;
+            font-family: 'Arial Black', sans-serif;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             text-transform: uppercase;
-            text-decoration: none; /* Rimuove la sottolineatura dal link */
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            letter-spacing: 1px;
         }
 
         .btn:hover {
             background: #ff0000;
             color: #000000;
-            box-shadow: 0 0 15px #ff0000;
-            transform: scale(1.05);
+            box-shadow: 0 0 25px #ff0000;
+            transform: translateY(-3px) scale(1.03);
+            border-color: #ffffff;
         }
 
         /* Icona Discord */
         .discord-icon {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             fill: currentColor;
         }
 
-        /* Box Informazioni (Popup/Messaggio) */
+        /* Riquadro di Informazione */
         .info-box {
             margin-top: 25px;
-            padding: 15px;
-            background: rgba(139, 0, 0, 0.2);
-            border: 1px solid #ff0000;
-            border-radius: 8px;
+            padding: 18px;
+            background: rgba(139, 0, 0, 0.3);
+            border: 2px dashed #ff0000;
+            border-radius: 10px;
             color: #ffcccc;
-            font-size: 1rem;
+            font-size: 1.05rem;
             display: none;
-            animation: fadeIn 0.4s ease-in-out forwards;
+            animation: bloodAppear 0.4s ease-out forwards;
+            line-height: 1.4;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes bloodAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sfondo Sangue Animato -->
+    <!-- Sfondo Animato Sangue -->
     <canvas id="bloodCanvas"></canvas>
 
-    <!-- Contenuto della pagina -->
+    <!-- Contenitore Centrale -->
     <div class="container">
         <h1>SANGUINAL</h1>
 
         <div class="button-group">
-            <!-- Tasto 1: Gioco -->
+            <!-- Tasto GIOCO -->
             <button class="btn" onclick="mostraInfo()">
                 🎮 GIOCO
             </button>
 
-            <!-- Tasto 2: Link Diretto al Server Discord -->
+            <!-- Tasto DISCORD -->
             <a href="https://discord.gg/EeuvcDmbUd" target="_blank" class="btn">
                 <svg class="discord-icon" viewBox="0 0 127.14 96.36">
                     <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.7,11.45-12.7c6.33,0,11.5,5.77,11.39,12.7C53.84,60,48.78,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.16-12.7,11.44-12.7c6.34,0,11.5,5.77,11.39,12.7C96.08,60,91,65.69,84.69,65.69Z"/>
@@ -142,19 +162,19 @@
             </a>
         </div>
 
-        <!-- Messaggio che appare al click su GIOCO -->
+        <!-- Popup Informazioni -->
         <div id="infoBox" class="info-box"></div>
     </div>
 
-    <!-- Script per la gestione del click e l'effetto sangue -->
+    <!-- Script per Animazione Sangue e Interazioni -->
     <script>
         function mostraInfo() {
             const infoBox = document.getElementById('infoBox');
             infoBox.style.display = 'block';
-            infoBox.innerHTML = "⚠️ <strong>IL GIOCO NON È ANCORA DISPONIBILE!</strong><br>Uscirà il <strong>🩸30 ottobre 2026🩸</strong>.";
+            infoBox.innerHTML = "🩸 <strong>IL GIOCO NON È ANCORA DISPONIBILE!</strong><br><br>Preparati alla carneficina: uscirà il <strong>30 Ottobre 2026</strong>!";
         }
 
-        // --- EFFETTO GOCCE DI SANGUE ANIMATE ---
+        // --- ANIMAZIONE SANGUE CHE CADE ---
         const canvas = document.getElementById('bloodCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -166,15 +186,16 @@
         resizeCanvas();
 
         const drops = [];
-        const numDrops = 45;
+        const numDrops = 60;
 
         for (let i = 0; i < numDrops; i++) {
             drops.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                length: Math.random() * 20 + 10,
-                speed: Math.random() * 4 + 2,
-                width: Math.random() * 3 + 1
+                length: Math.random() * 25 + 12,
+                speed: Math.random() * 5 + 2.5,
+                width: Math.random() * 3.5 + 1,
+                opacity: Math.random() * 0.6 + 0.4
             });
         }
 
@@ -185,8 +206,12 @@
                 let d = drops[i];
 
                 ctx.beginPath();
-                ctx.rect(d.x, d.y, d.width, d.length);
-                ctx.fillStyle = "rgba(180, 0, 0, 0.7)";
+                ctx.fillStyle = `rgba(180, 0, 0, ${d.opacity})`;
+                ctx.fillRect(d.x, d.y, d.width, d.length);
+
+                ctx.beginPath();
+                ctx.arc(d.x + d.width / 2, d.y + d.length, d.width * 1.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(220, 0, 0, ${d.opacity})`;
                 ctx.fill();
 
                 d.y += d.speed;
